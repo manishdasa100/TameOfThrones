@@ -7,7 +7,7 @@ public class Kingdom{
     private String kingdomName;
     private String emblem;
     private String msgReceived;
-    private Boolean kingWantsToBeRuller;
+    private boolean kingWantsToBeRuller;
     private List<Kingdom> supportedKingdoms;
 
     public Kingdom() {}
@@ -18,9 +18,10 @@ public class Kingdom{
      * @param emblem
      * @param kingWantsToBeRuller
      */
-    public Kingdom(String kingdomName, String emblem, Boolean kingWantsToBeRuller) {
+    public Kingdom(String kingdomName, String emblem, String msgReceived, boolean kingWantsToBeRuller) {
         this.kingdomName = kingdomName;
         this.emblem = emblem;
+        this.msgReceived = msgReceived;
         this.kingWantsToBeRuller = kingWantsToBeRuller;
     }
 
@@ -32,11 +33,19 @@ public class Kingdom{
         this.supportedKingdoms = supportedKingdoms;
     }
 
+    public List<Kingdom> getSupporteKingdoms() {
+        return supportedKingdoms;
+    }
+
+    public String getKingdomName() {
+        return kingdomName;
+    }
+
     public String getMsgReceived() {
         return msgReceived;
     }
 
-    public Boolean ifKingWantsToBeRuler() {
+    public boolean ifKingWantsToBeRuler() {
         return kingWantsToBeRuller;
     }
 

@@ -2,12 +2,15 @@ package TameOfThrones.models;
 
 import java.util.HashMap;
 import java.util.List;
+
+import TameOfThrones.utils.Helper;
+
 import java.util.ArrayList;
 
 public class Universe{
 
-    List<Kingdom> kingdoms;
-    Kingdom ruler;
+    private List<Kingdom> kingdoms;
+    private Kingdom ruler;
 
     public Universe() {}
 
@@ -47,45 +50,16 @@ public class Universe{
             String emblem = kingdom.getEmblem();
             String message = kingdom.getMsgReceived();
 
-            if (message != null && analyzeMessage(message, emblem)) supporters.add(kingdom);
+            if (message.length() > 0 && Helper.analyzeMessage(message, emblem)) supporters.add(kingdom);
         }
 
-        if (potentialRuler != null && supporters.size() >= 3) ruler = potentialRuler; 
+        if (potentialRuler != null && supporters.size() >= 3) {
+            ruler = potentialRuler;
+            ruler.setSupportedKingdoms(supporters);
+        } 
 
     }
 
-    public boolean analyzeMessage(String message, String emblem) {
-       
-        int cypherKey = emblem.length();
-        
-        char[] msgCharArray = message.toCharArray();
-        char[] emblemCharArray = emblem.toCharArray();
-
-        // Modifying the emblemCharArray with cypher key
-        for (int i = 0; i < emblemCharArray.length; i++) {
-            emblemCharArray[i] = (char)(emblemCharArray[i]+cypherKey);
-        }
-
-        HashMap<Character, Integer> msgFreqMap = new HashMap<Character, Integer>();
-
-        // Creating a freq map of message characters
-        for (char c : msgCharArray) {
-            msgFreqMap.put(c, msgFreqMap.getOrDefault(c, 0) + 1);
-        }
-
-        // Checking if the characters in emblem are present in the message
-        for (char c : emblemCharArray) {
-            if (!msgFreqMap.containsKey(c)) {
-                return false;
-            } 
-
-            int freq = msgFreqMap.get(c)-1;
-            if (freq == 0) msgFreqMap.remove(c);
-            else msgFreqMap.put(c, freq);
-        }
-
-        return true;
-    }
 
     public Kingdom getRuler() {
         findRuler();
