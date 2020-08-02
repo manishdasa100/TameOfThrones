@@ -10,7 +10,9 @@ import java.io.InputStream;
 import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import TameOfThrones.models.Kingdom;
 import TameOfThrones.models.Universe;
@@ -36,8 +38,11 @@ public class GeekTrust {
 
         
         List<Kingdom> kingdoms = getKingdoms(content);
-        Kingdom potentialRuler = new Kingdom("SPACE", "GORILLA", "", true);
-        kingdoms.add(potentialRuler);
+
+        // IN THE CONTEXT OF THE PROBLEM SPACE IS THE ONLY POTENTIAL RULER. 
+        // BUT FOR THE SAKE OF EXTENSIBILITY SOME OTHER KINGDOM CAN ALSO BECOME POTENTIAL RULER.
+        // THE CODE WILL CHECK FOR THE POTENTIAL RULER(NOT SPACE EVERYTIME) AND IF IT HAS GOT THE REQUIRED SUPPORT TO BECOME A RULER
+        
 
         Universe southeros = new Universe(kingdoms);
 
@@ -65,7 +70,7 @@ public class GeekTrust {
      */
 
     public static List<Kingdom> getKingdoms(String content) {
-        
+
         List<Kingdom> kingdoms = new ArrayList<Kingdom>();
 
         // CREATING A MAPPING KINGDOM -> EMBLEM
@@ -78,17 +83,38 @@ public class GeekTrust {
         kingdomToEmblemMap.put("ICE", "MAMMOTH");
         
 
-        String[] entries = content.split("\n");
+        // IF CONTENT OF THE FILE IS NOT EMPTY
+        if (!content.isEmpty()) {
+            String[] entries = content.split("\n");
 
-        // CREATING A LIST OF KINGDOMS FROM THE FILE CONTENT
-        for (int i = 0; i < entries.length; i++) {
-            String kingdomName = entries[i].split(" ")[0];
-            String messageReceived = entries[i].split(" ")[1];
+            HashSet<String> register = new HashSet<>();
 
-            kingdoms.add(new Kingdom(kingdomName, kingdomToEmblemMap.get(kingdomName), messageReceived, false));
+            // CREATING A LIST OF KINGDOMS FROM THE FILE CONTENT
+            for (int i = 0; i < entries.length; i++) {
+                
+                String[] parts = entries[i].split(" ");
+
+                String kingdomName = parts[0];
+                String messageReceived = "";
+                
+                for (int index = 1; index < parts.length; index++) {
+                    messageReceived = messageReceived + parts[index];
+                }
+
+                if (!register.contains(kingdomName)) {
+                    kingdoms.add(new Kingdom(kingdomName, kingdomToEmblemMap.get(kingdomName), messageReceived, false));
+                    register.add(kingdomName);
+                }    
+            }
+
         }
+
+        // ADDING THE POTENTIAL RULER IN THE LIST OF KINGDOMS
+        Kingdom potentialRuler = new Kingdom("SPACE", "GORILLA", "", true);
+        kingdoms.add(potentialRuler);
         
         return kingdoms;
+    
     }
 
 }

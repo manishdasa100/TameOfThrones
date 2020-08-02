@@ -2,8 +2,12 @@ package TameOfThrones.models;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.junit.Test;
+
+import TameOfThrones.GeekTrust;
+
 import static org.junit.Assert.*;
 
 public class UniverseTest{
@@ -26,7 +30,7 @@ public class UniverseTest{
     }
 
     @Test 
-    public void thereIsNoRulerTest() {
+    public void thereIsNoRulerTest1() {
         
         List<Kingdom> kingdoms = new ArrayList<Kingdom>();
         kingdoms.add(new Kingdom("LAND", "PANDA", "FDIXXSOKKOFBBMU", false));
@@ -40,6 +44,17 @@ public class UniverseTest{
         
         assertNull(universe.getRuler());
         
+    }
+
+
+    @Test
+    public void thereIsNoRulerTest2() {
+        
+        List<Kingdom> kingdoms = GeekTrust.getKingdoms("");
+
+        Universe universe = new Universe(kingdoms);
+        
+        assertNull(universe.getRuler());
     }
 
 

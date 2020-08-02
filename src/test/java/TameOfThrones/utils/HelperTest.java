@@ -22,6 +22,14 @@ public class HelperTest{
     }
 
 
+    // @Test
+    // public void validFileProvidedButFileContentIsEmpty() throws IOException{
+    //     String content = Helper.resolveFileFromResources("D:\\manish\\create\\java\\TameOfThrones\\src\\main\\resources\\q.txt");
+    //     assertNotNull(content);
+    //     assertEquals("File is empty.", content);
+    // }
+
+
     @Test
     public void invalidFileProvided() throws IOException{
         String content = Helper.resolveFileFromResources("D:\\manish\\create\\java\\TameOfThrones\\src\\main\\resources\\n.bmp");
