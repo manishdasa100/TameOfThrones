@@ -5,7 +5,12 @@ package TameOfThrones;
 
 import java.util.List;
 import java.io.IOException;
+import java.io.File;
+import java.io.InputStream;
+import java.io.FileInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import TameOfThrones.models.Kingdom;
 import TameOfThrones.models.Universe;
@@ -13,20 +18,26 @@ import TameOfThrones.utils.Helper;
 
 public class GeekTrust {
     public static void main(String[] args) throws IOException{
-        
-        String content = Helper.resolveFileFromResources("D:\\manish\\create\\java\\TameOfThrones\\src\\main\\resources\\messageData.txt");
 
-        String[] entries = content.split("\n");
+        // TO RUN THE MAIN METHOD PROVIDE THE PATH OF THE INPUT FILE AS COMMAND LINE ARG AS
+        // ./gradlew run --args='path/to/the/input/file'
+
+        if (args.length == 0) {
+            System.out.println("Please provide the path of the input file.");
+            System.exit(0);
+        }
+        
+        String content = Helper.resolveFileFromResources(args[0]);
+
+        if (content.equals("Invalid file. File must be a text file.") || content.equals("File provided in arguments not found! Please check the file name.")) {
+            System.out.println(content);
+            System.exit(0);
+        } 
 
         
-        
-        List<Kingdom> kingdoms = new ArrayList<Kingdom>();
-        kingdoms.add(new Kingdom("land", "panda", "fdixxsokkofbbmu", false));
-        kingdoms.add(new Kingdom("water", "octopus", "summer is coming", false));
-        kingdoms.add(new Kingdom("air", "owl", "owlaowlbowlc", false));
-        kingdoms.add(new Kingdom("space", "gorilla", "bnqvytpshs", false));
-        kingdoms.add(new Kingdom("fire", "dragon", "ajxgamuta", false));
-        kingdoms.add(new Kingdom("ice", "mammoth", "", true));
+        List<Kingdom> kingdoms = getKingdoms(content);
+        Kingdom potentialRuler = new Kingdom("SPACE", "GORILLA", "", true);
+        kingdoms.add(potentialRuler);
 
         Universe southeros = new Universe(kingdoms);
 
@@ -39,9 +50,45 @@ public class GeekTrust {
                 supporters = supporters + kingdom.getKingdomName() + " ";
             } 
 
-            //System.out.println(ruler.getKingdomName() + " " + supporters);
+            System.out.println(ruler.getKingdomName() + " " + supporters);
         } else {
             System.out.println("NONE");
-        } 
+        }
+        
     }
+
+
+    /**
+     * THIS FUNCTION CREATES AND RETURNS A LIST OF KINGDOM OBJECTS FROM FILE CONTENT
+     * @param content FILE CONTENT AS STRING
+     * @return LIST OF KINGDOMS
+     */
+
+    public static List<Kingdom> getKingdoms(String content) {
+        
+        List<Kingdom> kingdoms = new ArrayList<Kingdom>();
+
+        // CREATING A MAPPING KINGDOM -> EMBLEM
+        HashMap<String, String> kingdomToEmblemMap = new HashMap<>();
+        kingdomToEmblemMap.put("LAND", "PANDA");
+        kingdomToEmblemMap.put("WATER", "OCTOPUS");
+        kingdomToEmblemMap.put("AIR", "OWL");
+        kingdomToEmblemMap.put("SPACE", "GORILLA");
+        kingdomToEmblemMap.put("FIRE", "DRAGON");
+        kingdomToEmblemMap.put("ICE", "MAMMOTH");
+        
+
+        String[] entries = content.split("\n");
+
+        // CREATING A LIST OF KINGDOMS FROM THE FILE CONTENT
+        for (int i = 0; i < entries.length; i++) {
+            String kingdomName = entries[i].split(" ")[0];
+            String messageReceived = entries[i].split(" ")[1];
+
+            kingdoms.add(new Kingdom(kingdomName, kingdomToEmblemMap.get(kingdomName), messageReceived, false));
+        }
+        
+        return kingdoms;
+    }
+
 }

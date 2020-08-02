@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
+import com.google.common.io.Files;
+
 public class Helper{
 
     private Helper() { /*Singleton*/}
@@ -17,12 +19,21 @@ public class Helper{
      * @return String content of the file
      */
     public static String resolveFileFromResources(String filename) throws IOException {
-        InputStream inputStream = new FileInputStream(new File(filename));
-        byte[] buffer = new byte[inputStream.available()];
-        inputStream.read(buffer);
 
-        String content = new String(buffer, StandardCharsets.UTF_8);
+        if (!Files.getFileExtension(filename).equals("txt")) return "Invalid file. File must be a text file.";
 
+        String content = "";
+        try{
+            InputStream inputStream = new FileInputStream(new File(filename));
+            byte[] buffer = new byte[inputStream.available()];
+            inputStream.read(buffer);
+
+            content = new String(buffer, StandardCharsets.UTF_8);
+
+        } catch(IOException exception) {
+            content = "File provided in arguments not found! Please check the file name.";
+        }
+        
         return content;
     }
 
@@ -41,7 +52,7 @@ public class Helper{
 
         // Modifying the emblemCharArray with cypher key
         for (int i = 0; i < emblemCharArray.length; i++) {
-            emblemCharArray[i] = (char)(97 + ((emblemCharArray[i]+cypherKey)-97)%26);
+            emblemCharArray[i] = (char)(65 + ((emblemCharArray[i]+cypherKey)-65)%26);
         }
 
         HashMap<Character, Integer> msgFreqMap = new HashMap<Character, Integer>();

@@ -27,6 +27,12 @@ public class Universe{
         this.kingdoms = kingdoms;
     }
 
+
+    /**
+     * THE FUNCTION SCANS THE LIST OF KINGDOMS IN THE UNIVERSE OF SOUTHEROS 
+     * AND FIRST FINDS A POTENTIAL RULER AND SUPPORTERS FOR THAT RULER.
+     * IF THE POTENTIAL RULER HAS ENOUGH SUPPORT THEN IT SETS IT AS THE RULER.
+     */
     private void findRuler() {
 
         /* Traverse the list of kingdoms
@@ -61,6 +67,10 @@ public class Universe{
     }
 
 
+    /**
+     * CALLS findRuler() AND RETURNS THE ASSINGNED RULER. 
+     * @return ruler 
+     */
     public Kingdom getRuler() {
         findRuler();
         return ruler;

@@ -11,30 +11,46 @@ import static org.junit.Assert.*;
 public class HelperTest{
 
     @Test
-    public void readFileFromResourcesTest() throws IOException{
-        String expected = "air rozo\n"+
-                          "land faijwjsoofamau\n"+
-                          "ice sthststvsasos\n";
-        String content = Helper.resolveFileFromResources("D:\\manish\\create\\java\\TameOfThrones\\src\\main\\resources\\messageData.txt");
+    public void validFileProvided() throws IOException{
+        String expected = "LAND FDIXXSOKKOFBBMU\n"+
+                          "ICE MOMAMVTMTMHTM\n"+
+                          "WATER SUMMER\n"+
+                          "AIR OWLAOWLBOWLC";
+        String content = Helper.resolveFileFromResources("D:\\manish\\create\\java\\TameOfThrones\\src\\main\\resources\\m.txt");
         assertNotNull(content);
         
     }
 
+
+    @Test
+    public void invalidFileProvided() throws IOException{
+        String content = Helper.resolveFileFromResources("D:\\manish\\create\\java\\TameOfThrones\\src\\main\\resources\\n.bmp");
+        assertEquals("Invalid file. File must be a text file.", content);
+    }
+
+
+    @Test
+    public void fileNotInResources() throws IOException{
+        String content = Helper.resolveFileFromResources("D:\\manish\\create\\java\\TameOfThrones\\src\\main\\resources\\f.txt");
+        assertEquals("File provided in arguments not found! Please check the file name.", content);
+    }
+
+
     @Test
     public void analyzeMessageWithCorrectMsgTest() {
-        assertTrue(Helper.analyzeMessage("momamvtmtmhtm", "mammoth"));
+        assertTrue(Helper.analyzeMessage("MOMAMVTMTMHTM", "MAMMOTH"));
     }
 
 
     @Test
     public void analyzeMessageWithIncorrectMsgTest() {
-        assertFalse(Helper.analyzeMessage("owlaowlbowlc", "owl"));
+        assertFalse(Helper.analyzeMessage("OWLAOWLBOWLC", "OWL"));
     }
 
     
     @Test
     public void analyzeMessageCircularTest() {
-        assertTrue(Helper.analyzeMessage("abc", "xyz"));
+        assertTrue(Helper.analyzeMessage("ABC", "XYZ"));
     }
 
 

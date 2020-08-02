@@ -12,12 +12,12 @@ public class UniverseTest{
     public void thereIsaRulerTest() {
         
         List<Kingdom> kingdoms = new ArrayList<Kingdom>();
-        kingdoms.add(new Kingdom("land", "panda", "fdixxsokkofbbmu", false));
-        kingdoms.add(new Kingdom("water", "octopus", "summer is coming", false));
-        kingdoms.add(new Kingdom("air", "owl", "owlaowlbowlc", false));
-        kingdoms.add(new Kingdom("space", "gorilla", "", true));
-        kingdoms.add(new Kingdom("fire", "dragon", "ajxgamuta", false));
-        kingdoms.add(new Kingdom("ice", "mammoth", "momamvtmtmhtm", false));
+        kingdoms.add(new Kingdom("LAND", "PANDA", "FDIXXSOKKOFBBMU", false));
+        kingdoms.add(new Kingdom("WATER", "OCTOPUS", "SUMMERISCOMING", false));
+        kingdoms.add(new Kingdom("AIR", "OWL", "OWLAOWLBOWLC", false));
+        kingdoms.add(new Kingdom("SPACE", "GORILLA", "", true));
+        kingdoms.add(new Kingdom("FIRE", "DRAGON", "AJXGAMUTA", false));
+        kingdoms.add(new Kingdom("ICE", "MAMMOTH", "MOMAMVTMTMHTM", false));
 
         Universe universe = new Universe(kingdoms);
         
@@ -29,12 +29,12 @@ public class UniverseTest{
     public void thereIsNoRulerTest() {
         
         List<Kingdom> kingdoms = new ArrayList<Kingdom>();
-        kingdoms.add(new Kingdom("land", "panda", "fdixxsokkofbbmu", false));
-        kingdoms.add(new Kingdom("water", "octopus", "summer is coming", false));
-        kingdoms.add(new Kingdom("air", "owl", "owlaowlbowlc", false));
-        kingdoms.add(new Kingdom("space", "gorilla", "", true));
-        kingdoms.add(new Kingdom("fire", "dragon", "ajxgamuta", false));
-        kingdoms.add(new Kingdom("ice", "mammoth", "momamvtmqmhtm", false));
+        kingdoms.add(new Kingdom("LAND", "PANDA", "FDIXXSOKKOFBBMU", false));
+        kingdoms.add(new Kingdom("WATER", "OCTOPUS", "SUMMER IS COMING", false));
+        kingdoms.add(new Kingdom("AIR", "OWL", "OWLAOWLBOWLC", false));
+        kingdoms.add(new Kingdom("SPACE", "GORILLA", "", true));
+        kingdoms.add(new Kingdom("FIRE", "DRAGON", "AJXGAMUTA", false));
+        kingdoms.add(new Kingdom("ICE", "MAMMOTH", "MOMAMVTMQMHTM", false));
 
         Universe universe = new Universe(kingdoms);
         
@@ -47,16 +47,16 @@ public class UniverseTest{
     public void whoIsTheRulerTest() {
         
         List<Kingdom> kingdoms = new ArrayList<Kingdom>();
-        kingdoms.add(new Kingdom("land", "panda", "fdixxsokkofbbmu", false));
-        kingdoms.add(new Kingdom("water", "octopus", "summer is coming", false));
-        kingdoms.add(new Kingdom("air", "owl", "owlaowlbowlc", false));
-        kingdoms.add(new Kingdom("space", "gorilla", "bnqvytpshs", false));
-        kingdoms.add(new Kingdom("fire", "dragon", "ajxgamuta", false));
-        kingdoms.add(new Kingdom("ice", "mammoth", "", true));
+        kingdoms.add(new Kingdom("LAND", "PANDA", "FDIXXSOKKOFBBMU", false));
+        kingdoms.add(new Kingdom("WATER", "OCTOPUS", "SUMMERISCOMING", false));
+        kingdoms.add(new Kingdom("AIR", "OWL", "OWLAOWLBOWLC", false));
+        kingdoms.add(new Kingdom("SPACE", "GORILLA", "BNQVYTPSHS", false));
+        kingdoms.add(new Kingdom("FIRE", "DRAGON", "AJXGAMUTA", false));
+        kingdoms.add(new Kingdom("ICE", "MAMMOTH", "", true));
 
         Universe universe = new Universe(kingdoms);
         
-        assertEquals("ice", universe.getRuler().getKingdomName());
+        assertEquals("ICE", universe.getRuler().getKingdomName());
         
     }
 
