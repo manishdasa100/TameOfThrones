@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import TameOfThrones.excahnges.GetFileResponse;
 import TameOfThrones.models.Kingdom;
 import TameOfThrones.models.Universe;
 import TameOfThrones.utils.Helper;
@@ -29,15 +30,18 @@ public class GeekTrust {
             System.exit(0);
         }
         
-        String content = Helper.resolveFileFromResources(args[0]);
+        final String GOOD_RESPONSE = "GOOD";
+        final String BAD_RESPONSE = "BAD";
 
-        if (content.equals("Invalid file. File must be a text file.") || content.equals("File provided in arguments not found! Please check the file name.")) {
-            System.out.println(content);
+        GetFileResponse fileResponse = Helper.resolveFileFromResources(args[0]);
+
+        if (fileResponse.getResponse().equals(BAD_RESPONSE)) {
+            System.out.println(fileResponse.getMessage());
             System.exit(0);
         } 
 
         
-        List<Kingdom> kingdoms = getKingdoms(content);
+        List<Kingdom> kingdoms = getKingdoms(fileResponse.getFileContent());
 
         // IN THE CONTEXT OF THE PROBLEM SPACE IS THE ONLY POTENTIAL RULER. 
         // BUT FOR THE SAKE OF EXTENSIBILITY SOME OTHER KINGDOM CAN ALSO BECOME POTENTIAL RULER.
@@ -64,12 +68,12 @@ public class GeekTrust {
 
 
     /**
-     * THIS FUNCTION CREATES AND RETURNS A LIST OF KINGDOM OBJECTS FROM FILE CONTENT
-     * @param content FILE CONTENT AS STRING
+     * THIS FUNCTION CREATES AND RETURNS A LIST OF KINGDOM OBJECTS FROM FILE fileCONTENT
+     * @param fileContent FILE fileCONTENT AS STRING
      * @return LIST OF KINGDOMS
      */
 
-    public static List<Kingdom> getKingdoms(String content) {
+    public static List<Kingdom> getKingdoms(String fileContent) {
 
         List<Kingdom> kingdoms = new ArrayList<Kingdom>();
 
@@ -83,13 +87,13 @@ public class GeekTrust {
         kingdomToEmblemMap.put("ICE", "MAMMOTH");
         
 
-        // IF CONTENT OF THE FILE IS NOT EMPTY
-        if (!content.isEmpty()) {
-            String[] entries = content.split("\n");
+        // IF fileCONTENT OF THE FILE IS NOT EMPTY
+        if (!fileContent.isEmpty()) {
+            String[] entries = fileContent.split("\n");
 
             HashSet<String> register = new HashSet<>();
 
-            // CREATING A LIST OF KINGDOMS FROM THE FILE CONTENT
+            // CREATING A LIST OF KINGDOMS FROM THE FILE fileCONTENT
             for (int i = 0; i < entries.length; i++) {
                 
                 String[] parts = entries[i].split(" ");

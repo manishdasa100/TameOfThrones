@@ -9,6 +9,8 @@ import java.util.HashMap;
 
 import com.google.common.io.Files;
 
+import TameOfThrones.excahnges.GetFileResponse;
+
 public class Helper{
 
     private Helper() { /*Singleton*/}
@@ -18,23 +20,41 @@ public class Helper{
      * @param filename
      * @return String content of the file
      */
-    public static String resolveFileFromResources(String filename) throws IOException {
+    public static GetFileResponse resolveFileFromResources(String filename) throws IOException {
 
-        if (!Files.getFileExtension(filename).equals("txt")) return "Invalid file. File must be a text file.";
+        final String BAD_RESPONSE = "BAD";
+        final String GOOD_RESPONSE = "GOOD";
 
-        String content = "";
+        GetFileResponse getFileResponse = new GetFileResponse();
+
+        // IF THE FILE PROVIDED IN THE AGRS IS NOT A TEXT FILE
+        if (!Files.getFileExtension(filename).equals("txt")) {
+            String message = "Invalid file. File must be a text file.";
+            getFileResponse.setResponse(BAD_RESPONSE);
+            getFileResponse.setMessage(message);
+            return getFileResponse;
+        }
+
+        
         try{
             InputStream inputStream = new FileInputStream(new File(filename));
             byte[] buffer = new byte[inputStream.available()];
             inputStream.read(buffer);
 
-            content = new String(buffer, StandardCharsets.UTF_8);
+            String fileContent = new String(buffer, StandardCharsets.UTF_8);
+
+            getFileResponse.setResponse(GOOD_RESPONSE);
+            getFileResponse.setFileContent(fileContent);
 
         } catch(IOException exception) {
-            content = "File provided in arguments not found! Please check the file name.";
+            
+            String message = "File provided in arguments not found! Please check the file name.";
+            getFileResponse.setResponse(BAD_RESPONSE);
+            getFileResponse.setMessage(message);
+            
         }
         
-        return content;
+        return getFileResponse;
     }
 
 

@@ -4,20 +4,21 @@ import java.io.IOException;
 import java.util.List;
 import org.junit.Test;
 
+import TameOfThrones.excahnges.GetFileResponse;
 import TameOfThrones.utils.Helper;
 
 import static org.junit.Assert.*;
 
 public class HelperTest{
 
+    final String GOOD_RESPONSE = "GOOD";
+    final String BAD_RESPONSE = "BAD";
+
     @Test
     public void validFileProvided() throws IOException{
-        String expected = "LAND FDIXXSOKKOFBBMU\n"+
-                          "ICE MOMAMVTMTMHTM\n"+
-                          "WATER SUMMER\n"+
-                          "AIR OWLAOWLBOWLC";
-        String content = Helper.resolveFileFromResources("D:\\manish\\create\\java\\TameOfThrones\\src\\main\\resources\\m.txt");
-        assertNotNull(content);
+        
+        GetFileResponse getFileResponse = Helper.resolveFileFromResources("D:\\manish\\create\\java\\TameOfThrones\\src\\main\\resources\\m.txt");
+        assertEquals(GOOD_RESPONSE, getFileResponse.getResponse());
         
     }
 
@@ -32,33 +33,43 @@ public class HelperTest{
 
     @Test
     public void invalidFileProvided() throws IOException{
-        String content = Helper.resolveFileFromResources("D:\\manish\\create\\java\\TameOfThrones\\src\\main\\resources\\n.bmp");
-        assertEquals("Invalid file. File must be a text file.", content);
+        String expectedMessage = "Invalid file. File must be a text file.";
+        GetFileResponse getFileResponse = Helper.resolveFileFromResources("D:\\manish\\create\\java\\TameOfThrones\\src\\main\\resources\\n.bmp");
+        assertEquals(BAD_RESPONSE, getFileResponse.getResponse());
+        assertEquals(expectedMessage, getFileResponse.getMessage());
     }
 
 
     @Test
     public void fileNotInResources() throws IOException{
-        String content = Helper.resolveFileFromResources("D:\\manish\\create\\java\\TameOfThrones\\src\\main\\resources\\f.txt");
-        assertEquals("File provided in arguments not found! Please check the file name.", content);
+        String expectedMessage = "File provided in arguments not found! Please check the file name.";
+        GetFileResponse getFileResponse = Helper.resolveFileFromResources("D:\\manish\\create\\java\\TameOfThrones\\src\\main\\resources\\f.txt");
+        assertEquals(BAD_RESPONSE, getFileResponse.getResponse());
+        assertEquals(expectedMessage, getFileResponse.getMessage());
     }
 
 
     @Test
     public void analyzeMessageWithCorrectMsgTest() {
-        assertTrue(Helper.analyzeMessage("MOMAMVTMTMHTM", "MAMMOTH"));
+        String messageReceivedByKingdom = "MOMAMVTMTMHTM";
+        String kingdomEmblem = "MAMMOTH";
+        assertTrue(Helper.analyzeMessage(messageReceivedByKingdom, kingdomEmblem));
     }
 
 
     @Test
     public void analyzeMessageWithIncorrectMsgTest() {
-        assertFalse(Helper.analyzeMessage("OWLAOWLBOWLC", "OWL"));
+        String messageReceivedByKingdom = "OWLAOWLBOWLC";
+        String kingdomEmblem = "OWL";
+        assertFalse(Helper.analyzeMessage(messageReceivedByKingdom, kingdomEmblem));
     }
 
     
     @Test
     public void analyzeMessageCircularTest() {
-        assertTrue(Helper.analyzeMessage("ABC", "XYZ"));
+        String messageReceivedByKingdom = "ABC";
+        String kingdomEmblem = "XYZ";
+        assertTrue(Helper.analyzeMessage(messageReceivedByKingdom, kingdomEmblem));
     }
 
 
