@@ -40,85 +40,26 @@ public class GeekTrust {
             System.exit(0);
         } 
 
+        String fileContent = fileResponse.getFileContent();
         
-        List<Kingdom> kingdoms = getKingdoms(fileResponse.getFileContent());
+        List<Kingdom> kingdoms = Helper.parseKingdoms(fileContent);
 
-        // IN THE CONTEXT OF THE PROBLEM SPACE IS THE ONLY POTENTIAL RULER. 
-        // BUT FOR THE SAKE OF EXTENSIBILITY SOME OTHER KINGDOM CAN ALSO BECOME POTENTIAL RULER.
-        // THE CODE WILL CHECK FOR THE POTENTIAL RULER(NOT SPACE EVERYTIME) AND IF IT HAS GOT THE REQUIRED SUPPORT TO BECOME A RULER
         
-
+        // CREATING AN UNIVERSE WITH ITS KINGDOMS
         Universe southeros = new Universe(kingdoms);
 
         Kingdom ruler = southeros.getRuler();
 
         if (ruler != null) {
-
-            String supporters = "";
-            for (Kingdom kingdom : ruler.getSupporteKingdoms()) {
-                supporters = supporters + kingdom.getKingdomName() + " ";
-            } 
-
-            System.out.println(ruler.getKingdomName() + " " + supporters);
+            // THERE IS A RUER
+            String rulerName = ruler.getKingdomName();
+            String supportersOfRuler = ruler.getAllSupporterNamesAsString();
+            System.out.println(rulerName + " " + supportersOfRuler);
         } else {
+            // THERE IS NO RULER
             System.out.println("NONE");
         }
         
-    }
-
-
-    /**
-     * THIS FUNCTION CREATES AND RETURNS A LIST OF KINGDOM OBJECTS FROM FILE fileCONTENT
-     * @param fileContent FILE fileCONTENT AS STRING
-     * @return LIST OF KINGDOMS
-     */
-
-    public static List<Kingdom> getKingdoms(String fileContent) {
-
-        List<Kingdom> kingdoms = new ArrayList<Kingdom>();
-
-        // CREATING A MAPPING KINGDOM -> EMBLEM
-        HashMap<String, String> kingdomToEmblemMap = new HashMap<>();
-        kingdomToEmblemMap.put("LAND", "PANDA");
-        kingdomToEmblemMap.put("WATER", "OCTOPUS");
-        kingdomToEmblemMap.put("AIR", "OWL");
-        kingdomToEmblemMap.put("SPACE", "GORILLA");
-        kingdomToEmblemMap.put("FIRE", "DRAGON");
-        kingdomToEmblemMap.put("ICE", "MAMMOTH");
-        
-
-        // IF fileCONTENT OF THE FILE IS NOT EMPTY
-        if (!fileContent.isEmpty()) {
-            String[] entries = fileContent.split("\n");
-
-            HashSet<String> register = new HashSet<>();
-
-            // CREATING A LIST OF KINGDOMS FROM THE FILE fileCONTENT
-            for (int i = 0; i < entries.length; i++) {
-                
-                String[] parts = entries[i].split(" ");
-
-                String kingdomName = parts[0];
-                String messageReceived = "";
-                
-                for (int index = 1; index < parts.length; index++) {
-                    messageReceived = messageReceived + parts[index];
-                }
-
-                if (!register.contains(kingdomName)) {
-                    kingdoms.add(new Kingdom(kingdomName, kingdomToEmblemMap.get(kingdomName), messageReceived, false));
-                    register.add(kingdomName);
-                }    
-            }
-
-        }
-
-        // ADDING THE POTENTIAL RULER IN THE LIST OF KINGDOMS
-        Kingdom potentialRuler = new Kingdom("SPACE", "GORILLA", "", true);
-        kingdoms.add(potentialRuler);
-        
-        return kingdoms;
-    
     }
 
 }

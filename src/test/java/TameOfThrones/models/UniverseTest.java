@@ -12,16 +12,19 @@ import static org.junit.Assert.*;
 
 public class UniverseTest{
 
+    final boolean WANTS_TO_BE_RULER = true;
+    final boolean DOES_NOT_WANT_TO_BE_RULER = false;
+
     @Test 
     public void thereIsaRulerTest() {
         
         List<Kingdom> kingdoms = new ArrayList<Kingdom>();
-        kingdoms.add(new Kingdom("LAND", "PANDA", "FDIXXSOKKOFBBMU", false));
-        kingdoms.add(new Kingdom("WATER", "OCTOPUS", "SUMMERISCOMING", false));
-        kingdoms.add(new Kingdom("AIR", "OWL", "OWLAOWLBOWLC", false));
-        kingdoms.add(new Kingdom("SPACE", "GORILLA", "", true));
-        kingdoms.add(new Kingdom("FIRE", "DRAGON", "AJXGAMUTA", false));
-        kingdoms.add(new Kingdom("ICE", "MAMMOTH", "MOMAMVTMTMHTM", false));
+        kingdoms.add(new Kingdom("LAND", "PANDA", "FDIXXSOKKOFBBMU", DOES_NOT_WANT_TO_BE_RULER));
+        kingdoms.add(new Kingdom("WATER", "OCTOPUS", "SUMMERISCOMING", DOES_NOT_WANT_TO_BE_RULER));
+        kingdoms.add(new Kingdom("AIR", "OWL", "OWLAOWLBOWLC", DOES_NOT_WANT_TO_BE_RULER));
+        kingdoms.add(new Kingdom("SPACE", "GORILLA", "", WANTS_TO_BE_RULER));
+        kingdoms.add(new Kingdom("FIRE", "DRAGON", "AJXGAMUTA", DOES_NOT_WANT_TO_BE_RULER));
+        kingdoms.add(new Kingdom("ICE", "MAMMOTH", "MOMAMVTMTMHTM", DOES_NOT_WANT_TO_BE_RULER));
 
         Universe universe = new Universe(kingdoms);
         
@@ -33,28 +36,17 @@ public class UniverseTest{
     public void thereIsNoRulerTest1() {
         
         List<Kingdom> kingdoms = new ArrayList<Kingdom>();
-        kingdoms.add(new Kingdom("LAND", "PANDA", "FDIXXSOKKOFBBMU", false));
-        kingdoms.add(new Kingdom("WATER", "OCTOPUS", "SUMMER IS COMING", false));
-        kingdoms.add(new Kingdom("AIR", "OWL", "OWLAOWLBOWLC", false));
-        kingdoms.add(new Kingdom("SPACE", "GORILLA", "", true));
-        kingdoms.add(new Kingdom("FIRE", "DRAGON", "AJXGAMUTA", false));
-        kingdoms.add(new Kingdom("ICE", "MAMMOTH", "MOMAMVTMQMHTM", false));
+        kingdoms.add(new Kingdom("LAND", "PANDA", "FDIXXSOKKOFBBMU", DOES_NOT_WANT_TO_BE_RULER));
+        kingdoms.add(new Kingdom("WATER", "OCTOPUS", "SUMMER IS COMING", DOES_NOT_WANT_TO_BE_RULER));
+        kingdoms.add(new Kingdom("AIR", "OWL", "OWLAOWLBOWLC", DOES_NOT_WANT_TO_BE_RULER));
+        kingdoms.add(new Kingdom("SPACE", "GORILLA", "", WANTS_TO_BE_RULER));
+        kingdoms.add(new Kingdom("FIRE", "DRAGON", "AJXGAMUTA", DOES_NOT_WANT_TO_BE_RULER));
+        kingdoms.add(new Kingdom("ICE", "MAMMOTH", "MOMAMVTMQMHTM", DOES_NOT_WANT_TO_BE_RULER));
 
         Universe universe = new Universe(kingdoms);
         
         assertNull(universe.getRuler());
         
-    }
-
-
-    @Test
-    public void thereIsNoRulerTest2() {
-        
-        List<Kingdom> kingdoms = GeekTrust.getKingdoms("");
-
-        Universe universe = new Universe(kingdoms);
-        
-        assertNull(universe.getRuler());
     }
 
 
@@ -62,12 +54,12 @@ public class UniverseTest{
     public void whoIsTheRulerTest() {
         
         List<Kingdom> kingdoms = new ArrayList<Kingdom>();
-        kingdoms.add(new Kingdom("LAND", "PANDA", "FDIXXSOKKOFBBMU", false));
-        kingdoms.add(new Kingdom("WATER", "OCTOPUS", "SUMMERISCOMING", false));
-        kingdoms.add(new Kingdom("AIR", "OWL", "OWLAOWLBOWLC", false));
-        kingdoms.add(new Kingdom("SPACE", "GORILLA", "BNQVYTPSHS", false));
-        kingdoms.add(new Kingdom("FIRE", "DRAGON", "AJXGAMUTA", false));
-        kingdoms.add(new Kingdom("ICE", "MAMMOTH", "", true));
+        kingdoms.add(new Kingdom("LAND", "PANDA", "FDIXXSOKKOFBBMU", DOES_NOT_WANT_TO_BE_RULER));
+        kingdoms.add(new Kingdom("WATER", "OCTOPUS", "SUMMERISCOMING", DOES_NOT_WANT_TO_BE_RULER));
+        kingdoms.add(new Kingdom("AIR", "OWL", "OWLAOWLBOWLC", DOES_NOT_WANT_TO_BE_RULER));
+        kingdoms.add(new Kingdom("SPACE", "GORILLA", "BNQVYTPSHS", DOES_NOT_WANT_TO_BE_RULER));
+        kingdoms.add(new Kingdom("FIRE", "DRAGON", "AJXGAMUTA", DOES_NOT_WANT_TO_BE_RULER));
+        kingdoms.add(new Kingdom("ICE", "MAMMOTH", "", WANTS_TO_BE_RULER));
 
         Universe universe = new Universe(kingdoms);
         

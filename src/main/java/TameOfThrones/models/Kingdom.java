@@ -33,10 +33,6 @@ public class Kingdom{
         this.supportedKingdoms = supportedKingdoms;
     }
 
-    public List<Kingdom> getSupporteKingdoms() {
-        return supportedKingdoms;
-    }
-
     public String getKingdomName() {
         return kingdomName;
     }
@@ -51,6 +47,15 @@ public class Kingdom{
 
     public String getEmblem() {
         return emblem;
+    }
+
+    public String getAllSupporterNamesAsString() {
+        String supporters = "";
+        for (Kingdom kingdom : supportedKingdoms) {
+            supporters = supporters + kingdom.getKingdomName() + " ";
+        }
+
+        return supporters;
     }
 
 }
