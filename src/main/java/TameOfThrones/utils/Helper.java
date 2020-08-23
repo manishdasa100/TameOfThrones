@@ -45,7 +45,7 @@ public class Helper{
         
         try{
 
-            InputStream inputStream = new FileInputStream(new File(Paths.get(filePath).toUri()));
+            InputStream inputStream = new FileInputStream(new File(filePath));
             byte[] buffer = new byte[inputStream.available()];
             inputStream.read(buffer);
 
@@ -117,45 +117,6 @@ public class Helper{
 
         return kingdoms;
     
-    }
-
-
-    /**
-     * Helper method to check if the encoded emblem is present in the message
-     * @param message
-     * @param emblem
-     * @return
-     */
-    public static boolean analyzeMessage(String message, String emblem) {
-        int cypherKey = emblem.length();
-        
-        char[] msgCharArray = message.toCharArray();
-        char[] emblemCharArray = emblem.toCharArray();
-
-        // Modifying the emblemCharArray with cypher key
-        for (int i = 0; i < emblemCharArray.length; i++) {
-            emblemCharArray[i] = (char)(65 + ((emblemCharArray[i]+cypherKey)-65)%26);
-        }
-
-        HashMap<Character, Integer> msgFreqMap = new HashMap<Character, Integer>();
-
-        // Creating a freq map of message characters
-        for (char c : msgCharArray) {
-            msgFreqMap.put(c, msgFreqMap.getOrDefault(c, 0) + 1);
-        }
-
-        // Checking if the characters in emblem are present in the message
-        for (char c : emblemCharArray) {
-            if (!msgFreqMap.containsKey(c)) {
-                return false;
-            } 
-
-            int freq = msgFreqMap.get(c)-1;
-            if (freq == 0) msgFreqMap.remove(c);
-            else msgFreqMap.put(c, freq);
-        }
-
-        return true;
     }
 
 }

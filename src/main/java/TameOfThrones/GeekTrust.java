@@ -5,14 +5,9 @@ package TameOfThrones;
 
 import java.util.List;
 import java.io.IOException;
-import java.io.File;
-import java.io.InputStream;
-import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 
 import TameOfThrones.excahnges.GetFileResponse;
 import TameOfThrones.models.Kingdom;
@@ -45,7 +40,7 @@ public class GeekTrust {
         List<Kingdom> kingdoms = Helper.parseKingdoms(fileContent);
 
         
-        // CREATING AN UNIVERSE WITH ITS KINGDOMS
+        // CREATING A UNIVERSE WITH ITS KINGDOMS
         Universe southeros = new Universe(kingdoms);
 
         Kingdom ruler = southeros.getRuler();

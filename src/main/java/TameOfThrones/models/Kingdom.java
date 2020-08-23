@@ -1,6 +1,7 @@
 package TameOfThrones.models;
 
 import java.util.List;
+import java.util.HashMap;
 
 public class Kingdom{
 
@@ -47,6 +48,44 @@ public class Kingdom{
 
     public String getEmblem() {
         return emblem;
+    }
+
+    /**
+     * Method to check if the message received by the kingdom is correct
+     * @param message
+     * @param emblem
+     * @return
+     */
+    public boolean isReceivedMessageCorrect() {
+        int cypherKey = emblem.length();
+        
+        char[] msgCharArray = msgReceived.toCharArray();
+        char[] emblemCharArray = emblem.toCharArray();
+
+        // Modifying the emblemCharArray with cypher key
+        for (int i = 0; i < emblemCharArray.length; i++) {
+            emblemCharArray[i] = (char)(65 + ((emblemCharArray[i]+cypherKey)-65)%26);
+        }
+
+        HashMap<Character, Integer> msgFreqMap = new HashMap<Character, Integer>();
+
+        // Creating a freq map of message characters
+        for (char c : msgCharArray) {
+            msgFreqMap.put(c, msgFreqMap.getOrDefault(c, 0) + 1);
+        }
+
+        // Checking if the characters in emblem are present in the message
+        for (char c : emblemCharArray) {
+            if (!msgFreqMap.containsKey(c)) {
+                return false;
+            } 
+
+            int freq = msgFreqMap.get(c)-1;
+            if (freq == 0) msgFreqMap.remove(c);
+            else msgFreqMap.put(c, freq);
+        }
+
+        return true;
     }
 
     public String getAllSupporterNamesAsString() {

@@ -36,17 +36,6 @@ public class Universe{
      */
     private void findRuler() {
 
-        /* Traverse the list of kingdoms
-           Find a potential ruler
-           For each kingdom get the message sent
-           get the emblem 
-           Analyze the message 
-           Add/ not add the kingdom to a list of supports
-           
-           if size of list of supports >= 3 then set the ruler
-           
-        */
-
         Kingdom potentialRuler = null;
         
         List<Kingdom> supporters = new ArrayList<Kingdom>();
@@ -54,10 +43,7 @@ public class Universe{
         for (Kingdom kingdom : kingdoms) {
             if (kingdom.ifKingWantsToBeRuler()) potentialRuler = kingdom;
 
-            String emblem = kingdom.getEmblem();
-            String message = kingdom.getMsgReceived();
-
-            if (message.length() > 0 && Helper.analyzeMessage(message, emblem)) supporters.add(kingdom);
+            if (kingdom.isReceivedMessageCorrect()) supporters.add(kingdom);
         }
 
         if (potentialRuler != null && supporters.size() >= 3) {
@@ -69,7 +55,7 @@ public class Universe{
 
 
     /**
-     * CALLS findRuler() AND RETURNS THE ASSINGNED RULER. 
+     * FINDS THE RULER AND RETURNS IT. RETURNS NULL IF THERE IS NO RULER 
      * @return ruler 
      */
     public Kingdom getRuler() {
